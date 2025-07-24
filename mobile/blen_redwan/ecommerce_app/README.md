@@ -1,13 +1,8 @@
-# ecommerce_app
+<h2>App Preview</h2>
 
-A new Flutter project.
+<img src="assets/images/home_page.png" width="250">
+<img src="assets/images/detail_page.png" width="250">
+<img src="assets/images/addupdate_page.png" width="250">
+<img src="assets/images/search_page.png" width="250">
 
-## App Preview
-
-Here’s a quick look at the UI:
-
-![Home page](assets/images/home.png)
-![Detail Page](assets/images/detail_page.png)
-![Add/Update Screen](assets/images/addupdate_page.png)
-![Search Page](assets/images/search_page.png)
 
