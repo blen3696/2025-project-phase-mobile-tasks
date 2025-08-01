@@ -1,6 +1,6 @@
-import '../colors.dart';
+import '../../../../colors.dart';
 import 'package:flutter/material.dart';
-import '../domain/entities/product.dart';
+import '../../domain/entities/product.dart';
 import '../widgets/size_selector.dart';
 
 class DetailsPage extends StatelessWidget {
