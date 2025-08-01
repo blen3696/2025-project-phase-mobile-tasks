@@ -17,13 +17,13 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              HeaderSection(),
-              SizedBox(height: 22.0),
+              const HeaderSection(),
+              const SizedBox(height: 22.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Available Products",
+                  const Text(
+                    'Available Products',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   GestureDetector(
@@ -36,16 +36,16 @@ class HomePage extends StatelessWidget {
                         border: Border.all(color: Colors.grey[300]!),
                       ),
                       padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.search, color: Colors.grey),
+                      child: const Icon(Icons.search, color: Colors.grey),
                     ),
                   ),
                 ],
               ),
               // SearchBar(),
-              SizedBox(height: 16.0),
-              Expanded(
+              const SizedBox(height: 16.0),
+              const Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(16.0),
                   child: ProductList(),
                 ),
               ),

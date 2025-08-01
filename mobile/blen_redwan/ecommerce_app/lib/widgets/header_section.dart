@@ -24,18 +24,18 @@ class HeaderSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "July 14, 2023", // You can make this dynamic later
+                  'July 14, 2023',
                   style: TextStyle(fontSize: 12, color: Colors.grey[400]),
                 ),
-                SizedBox(height: 4),
-                Row(
+                const SizedBox(height: 4),
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "Hello, ",
+                      'Hello, ',
                       style: TextStyle(fontSize: 16, color: Colors.grey),
                     ),
-                    Text("Yohannes", style: TextStyle(fontSize: 16)),
+                    Text('Yohannes', style: TextStyle(fontSize: 16)),
                   ],
                 ),
               ],
@@ -50,7 +50,7 @@ class HeaderSection extends StatelessWidget {
             border: Border.all(color: Colors.grey[300]!),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Icon(Icons.notifications),
+          child: const Icon(Icons.notifications),
         ),
       ],
     );
