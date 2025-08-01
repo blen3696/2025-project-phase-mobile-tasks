@@ -26,13 +26,18 @@ class HomePage extends StatelessWidget {
                     "Available Products",
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey[300]!),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/search');
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.grey[300]!),
+                      ),
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(Icons.search, color: Colors.grey),
                     ),
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.search, color: Colors.grey),
                   ),
                 ],
               ),
@@ -51,7 +56,7 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: MyColors.myBlue,
         onPressed: () {
-          // I'll make the navigation to add_update page here later
+          Navigator.pushNamed(context, '/add-update');
         },
         shape: const CircleBorder(),
         child: const Icon(Icons.add, color: Colors.white, size: 32),

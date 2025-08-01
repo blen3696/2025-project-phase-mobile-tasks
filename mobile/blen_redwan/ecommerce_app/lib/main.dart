@@ -1,6 +1,6 @@
+import 'package:ecommerce_app/models/product.dart';
 import 'package:flutter/material.dart';
 import 'screens/home_page.dart';
-import './data/dummy_products.dart';
 import './screens/details_page.dart';
 import './screens//add_update_page.dart';
 import './screens//search_page.dart';
@@ -15,8 +15,30 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Ecommerce App',
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      initialRoute: '/',
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/':
+            return MaterialPageRoute(builder: (context) => const HomePage());
+          case '/add-update':
+            final product = settings.arguments as Product?;
+            return MaterialPageRoute(
+              builder: (_) => AddUpdatePage(product: product),
+            );
+          case '/details':
+            final product = settings.arguments as Product;
+            return MaterialPageRoute(
+              builder: (_) => DetailsPage(product: product),
+            );
+          case '/search':
+            return MaterialPageRoute(builder: (_) => const SearchPage());
+          default:
+            return null;
+        }
+      },
+      // home: HomePage(),
       // home: DetailsPage(product: dummyProducts[0]),
       // home: AddUpdatePage(),
       // home: SearchPage(),

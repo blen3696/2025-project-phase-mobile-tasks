@@ -5,11 +5,14 @@ class CustomTextField extends StatelessWidget {
   final String label;
   final bool isPrice;
   final int maxLines;
+  final TextEditingController? controller;
+
   const CustomTextField({
     super.key,
     required this.label,
     this.isPrice = false,
     this.maxLines = 1,
+    this.controller,
   });
 
   @override
@@ -22,6 +25,8 @@ class CustomTextField extends StatelessWidget {
           Text(label, style: TextStyle(fontSize: 12)),
           SizedBox(height: 8),
           TextField(
+            controller: controller,
+            keyboardType: isPrice ? TextInputType.number : TextInputType.text,
             maxLines: maxLines,
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
