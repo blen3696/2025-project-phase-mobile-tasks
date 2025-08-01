@@ -1,5 +1,5 @@
-import '../colors.dart';
-import '../domain/entities/product.dart';
+import '../../../../colors.dart';
+import '../../domain/entities/product.dart';
 import '../widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 

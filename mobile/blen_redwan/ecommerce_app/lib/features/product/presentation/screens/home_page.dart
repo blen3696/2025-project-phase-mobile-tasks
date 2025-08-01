@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../data/dummy_products.dart';
+import '../../data/dummy_products.dart';
 import '../widgets/product_card.dart';
 import '../widgets/header_section.dart';
-import '../colors.dart';
+import '../../../../colors.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

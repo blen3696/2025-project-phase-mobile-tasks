@@ -1,7 +1,7 @@
-import '../colors.dart';
+import '../../../../colors.dart';
 import 'package:flutter/material.dart';
 import '../widgets/product_card.dart';
-import '../data/dummy_products.dart';
+import '../../data/dummy_products.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
