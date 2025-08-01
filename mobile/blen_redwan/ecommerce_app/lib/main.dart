@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/models/product.dart';
+import 'models/product.dart';
 import 'package:flutter/material.dart';
 import 'screens/home_page.dart';
 import './screens/details_page.dart';
@@ -38,10 +38,6 @@ class MyApp extends StatelessWidget {
             return null;
         }
       },
-      // home: HomePage(),
-      // home: DetailsPage(product: dummyProducts[0]),
-      // home: AddUpdatePage(),
-      // home: SearchPage(),
     );
   }
 }

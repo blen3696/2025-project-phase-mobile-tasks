@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/colors.dart';
+import '../colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -22,8 +22,8 @@ class CustomTextField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: TextStyle(fontSize: 12)),
-          SizedBox(height: 8),
+          Text(label, style: const TextStyle(fontSize: 12)),
+          const SizedBox(height: 8),
           TextField(
             controller: controller,
             keyboardType: isPrice ? TextInputType.number : TextInputType.text,

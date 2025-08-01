@@ -1,7 +1,7 @@
-import 'package:ecommerce_app/colors.dart';
+import '../colors.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerce_app/widgets/product_card.dart';
-import 'package:ecommerce_app/data/dummy_products.dart';
+import '../widgets/product_card.dart';
+import '../data/dummy_products.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
@@ -27,11 +27,14 @@ class SearchPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: Icon(Icons.arrow_back_ios, color: MyColors.myBlue),
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: MyColors.myBlue,
+                      ),
                     ),
                     const SizedBox(width: 80),
                     const Text(
-                      "Search Product",
+                      'Search Product',
                       style: TextStyle(fontSize: 14),
                     ),
                   ],
@@ -45,8 +48,8 @@ class SearchPage extends StatelessWidget {
                   Expanded(
                     child: TextField(
                       decoration: InputDecoration(
-                        hintText: "Leather",
-                        suffixIcon: Icon(
+                        hintText: 'Leather',
+                        suffixIcon: const Icon(
                           Icons.arrow_forward,
                           color: MyColors.myBlue,
                         ),
@@ -54,18 +57,22 @@ class SearchPage extends StatelessWidget {
                         fillColor: Colors.white,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(color: MyColors.myLightGrey),
+                          borderSide: const BorderSide(
+                            color: MyColors.myLightGrey,
+                          ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: MyColors.myLightGrey,
                             width: 1.5,
                           ),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(color: MyColors.myLightGrey),
+                          borderSide: const BorderSide(
+                            color: MyColors.myLightGrey,
+                          ),
                         ),
                       ),
                     ),
@@ -78,7 +85,7 @@ class SearchPage extends StatelessWidget {
                       color: MyColors.myBlue,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Icon(Icons.filter_list, color: Colors.white),
+                    child: const Icon(Icons.filter_list, color: Colors.white),
                   ),
                 ],
               ),
@@ -97,7 +104,7 @@ class SearchPage extends StatelessWidget {
               ),
               const SizedBox(height: 10),
 
-              const Text("Category"),
+              const Text('Category'),
               const SizedBox(height: 8),
               TextField(
                 decoration: InputDecoration(
@@ -105,18 +112,18 @@ class SearchPage extends StatelessWidget {
                   fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: MyColors.myLightGrey),
+                    borderSide: const BorderSide(color: MyColors.myLightGrey),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: MyColors.myLightGrey,
                       width: 1.5,
                     ),
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: MyColors.myLightGrey),
+                    borderSide: const BorderSide(color: MyColors.myLightGrey),
                   ),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
@@ -127,7 +134,7 @@ class SearchPage extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              const Text("Price"),
+              const Text('Price'),
               const SizedBox(height: 8),
               SliderTheme(
                 data: SliderTheme.of(context).copyWith(
@@ -170,7 +177,7 @@ class SearchPage extends StatelessWidget {
                     ),
                   ),
                   child: const Text(
-                    "APPLY",
+                    'APPLY',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1,

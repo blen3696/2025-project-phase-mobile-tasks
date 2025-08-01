@@ -17,12 +17,11 @@ class ProductCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [BoxShadow(blurRadius: 6, color: Colors.black12)],
+          boxShadow: const [BoxShadow(blurRadius: 6, color: Colors.black12)],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Product Image (no padding)
             ClipRRect(
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(16),
@@ -36,13 +35,11 @@ class ProductCard extends StatelessWidget {
               ),
             ),
 
-            // All content below wrapped in padding
             Padding(
               padding: const EdgeInsets.all(12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Name and Category
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -58,7 +55,7 @@ class ProductCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        "\$${product.price}",
+                        '\$${product.price}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
@@ -67,8 +64,6 @@ class ProductCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-
-                  // Price and Rating
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -85,7 +80,7 @@ class ProductCard extends StatelessWidget {
                           const Icon(Icons.star, color: Colors.amber, size: 16),
                           const SizedBox(width: 4),
                           Text(
-                            "(${product.rating})",
+                            '(${product.rating})',
                             style: const TextStyle(
                               fontSize: 12,
                               color: Colors.grey,

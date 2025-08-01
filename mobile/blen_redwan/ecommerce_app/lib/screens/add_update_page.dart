@@ -1,6 +1,6 @@
-import 'package:ecommerce_app/colors.dart';
-import 'package:ecommerce_app/models/product.dart';
-import 'package:ecommerce_app/widgets/custom_text_field.dart';
+import '../colors.dart';
+import '../models/product.dart';
+import '../widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 class AddUpdatePage extends StatefulWidget {
@@ -25,7 +25,7 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
       nameController.text = widget.product!.name;
       categoryController.text = widget.product!.category;
       priceController.text = widget.product!.price.toString();
-      descriptionController.text = widget.product!.description ?? '';
+      descriptionController.text = widget.product!.description;
     }
   }
 
@@ -71,11 +71,14 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                   children: [
                     IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: Icon(Icons.arrow_back_ios, color: MyColors.myBlue),
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: MyColors.myBlue,
+                      ),
                     ),
                     const SizedBox(width: 100),
                     Text(
-                      isUpdating ? "Update Product" : "Add Product",
+                      isUpdating ? 'Update Product' : 'Add Product',
                       style: const TextStyle(fontSize: 14),
                     ),
                   ],
@@ -100,7 +103,7 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                         children: [
                           Icon(Icons.image_outlined, size: 36),
                           SizedBox(height: 16),
-                          Text("Upload Image", style: TextStyle(fontSize: 12)),
+                          Text('Upload Image', style: TextStyle(fontSize: 12)),
                         ],
                       ),
                     ),
@@ -150,7 +153,7 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                         ),
                       ),
                       child: Text(
-                        isUpdating ? "UPDATE" : "ADD",
+                        isUpdating ? 'UPDATE' : 'ADD',
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.white,
@@ -170,7 +173,7 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                           ),
                         ),
                         child: const Text(
-                          "DELETE",
+                          'DELETE',
                           style: TextStyle(fontSize: 12),
                         ),
                       ),

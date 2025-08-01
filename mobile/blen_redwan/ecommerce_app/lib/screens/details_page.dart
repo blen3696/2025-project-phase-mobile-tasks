@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/colors.dart';
+import '../colors.dart';
 import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../widgets/size_selector.dart';
@@ -31,7 +31,7 @@ class DetailsPage extends StatelessWidget {
                     child: CircleAvatar(
                       backgroundColor: Colors.white,
                       child: Padding(
-                        padding: EdgeInsetsGeometry.symmetric(
+                        padding: const EdgeInsetsGeometry.symmetric(
                           horizontal: 4,
                           vertical: 0,
                         ),
@@ -73,7 +73,7 @@ class DetailsPage extends StatelessWidget {
                               color: Colors.amber,
                               size: 18,
                             ),
-                            Text("(${product.rating.toStringAsFixed(1)})"),
+                            Text('(${product.rating.toStringAsFixed(1)})'),
                           ],
                         ),
                       ],
@@ -93,7 +93,7 @@ class DetailsPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "\$${product.price.toStringAsFixed(0)}",
+                          '\$${product.price.toStringAsFixed(0)}',
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -104,7 +104,7 @@ class DetailsPage extends StatelessWidget {
 
                     const SizedBox(height: 10),
 
-                    SingleChildScrollView(
+                    const SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
@@ -125,7 +125,7 @@ class DetailsPage extends StatelessWidget {
                     const SizedBox(height: 16),
 
                     const Text(
-                      "A derby leather shoe is a classic and versatile footwear option characterized by its open lacing system, where the shoelace eyelets are sewn on top of the vamp (the upper part of the shoe). This design feature provides a more relaxed and casual look compared to the closed lacing system of oxford shoes. Derby shoes are typically made of high-quality leather, known for its durability and elegance, making them suitable for both formal and casual occasions. With their timeless style and comfortable fit, derby leather shoes are a staple in any well-rounded wardrobe.",
+                      'A derby leather shoe is a classic and versatile footwear option characterized by its open lacing system, where the shoelace eyelets are sewn on top of the vamp (the upper part of the shoe). This design feature provides a more relaxed and casual look compared to the closed lacing system of oxford shoes. Derby shoes are typically made of high-quality leather, known for its durability and elegance, making them suitable for both formal and casual occasions. With their timeless style and comfortable fit, derby leather shoes are a staple in any well-rounded wardrobe.',
                       style: TextStyle(fontSize: 13, height: 1.6),
                     ),
 
@@ -148,7 +148,7 @@ class DetailsPage extends StatelessWidget {
                             ),
 
                             child: const Text(
-                              "DELETE",
+                              'DELETE',
                               style: TextStyle(fontSize: 14, color: Colors.red),
                             ),
                           ),
@@ -173,7 +173,7 @@ class DetailsPage extends StatelessWidget {
                               ),
                             ),
                             child: const Text(
-                              "UPDATE",
+                              'UPDATE',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.white,
