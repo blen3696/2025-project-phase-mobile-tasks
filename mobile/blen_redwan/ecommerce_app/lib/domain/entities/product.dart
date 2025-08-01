@@ -16,4 +16,14 @@ class Product {
     required this.description,
     required this.rating,
   });
+
+  factory Product.empty() => Product(
+    id: -1,
+    name: '',
+    price: 0.0,
+    category: '',
+    image: '',
+    description: '',
+    rating: 0.0,
+  );
 }
