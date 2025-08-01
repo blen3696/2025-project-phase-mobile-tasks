@@ -25,7 +25,7 @@ class SearchPage extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        // Navigate back to previous screen will be here
+                        Navigator.pop(context);
                       },
                       icon: Icon(Icons.arrow_back_ios, color: MyColors.myBlue),
                     ),

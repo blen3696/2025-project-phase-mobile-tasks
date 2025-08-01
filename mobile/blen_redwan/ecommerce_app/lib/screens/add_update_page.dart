@@ -1,12 +1,58 @@
 import 'package:ecommerce_app/colors.dart';
+import 'package:ecommerce_app/models/product.dart';
 import 'package:ecommerce_app/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
-class AddUpdatePage extends StatelessWidget {
-  const AddUpdatePage({super.key});
+class AddUpdatePage extends StatefulWidget {
+  final Product? product;
+
+  const AddUpdatePage({super.key, this.product});
+
+  @override
+  State<AddUpdatePage> createState() => _AddUpdatePageState();
+}
+
+class _AddUpdatePageState extends State<AddUpdatePage> {
+  final nameController = TextEditingController();
+  final categoryController = TextEditingController();
+  final priceController = TextEditingController();
+  final descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.product != null) {
+      nameController.text = widget.product!.name;
+      categoryController.text = widget.product!.category;
+      priceController.text = widget.product!.price.toString();
+      descriptionController.text = widget.product!.description ?? '';
+    }
+  }
+
+  void onAddOrUpdate() {
+    final product = Product(
+      id: widget.product?.id ?? DateTime.now().millisecondsSinceEpoch,
+      name: nameController.text.trim(),
+      category: categoryController.text.trim(),
+      price: double.tryParse(priceController.text.trim()) ?? 0,
+      image: widget.product?.image ?? 'assets/images/default.png',
+      rating: widget.product?.rating ?? 4.0,
+      description: descriptionController.text.trim(),
+    );
+
+    Navigator.pop(context, product);
+  }
+
+  void onDelete() {
+    if (widget.product != null) {
+      Navigator.pop(context, {'delete': widget.product!.id});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final isUpdating = widget.product != null;
+
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
@@ -16,7 +62,6 @@ class AddUpdatePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
@@ -25,26 +70,24 @@ class AddUpdatePage extends StatelessWidget {
                 child: Row(
                   children: [
                     IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+                      onPressed: () => Navigator.pop(context),
                       icon: Icon(Icons.arrow_back_ios, color: MyColors.myBlue),
                     ),
                     const SizedBox(width: 100),
-                    const Text("Add Product", style: TextStyle(fontSize: 14)),
+                    Text(
+                      isUpdating ? "Update Product" : "Add Product",
+                      style: const TextStyle(fontSize: 14),
+                    ),
                   ],
                 ),
               ),
 
               const SizedBox(height: 10),
 
-              // Upload Image
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: GestureDetector(
-                  onTap: () {
-                    // handle image upload
-                  },
+                  onTap: () {},
                   child: Container(
                     height: 120,
                     decoration: BoxDecoration(
@@ -67,29 +110,38 @@ class AddUpdatePage extends StatelessWidget {
 
               const SizedBox(height: 10),
 
-              // Input Fields
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
-                  children: const [
-                    CustomTextField(label: 'Name'),
-                    CustomTextField(label: 'Category'),
-                    CustomTextField(label: 'Price', isPrice: true),
-                    CustomTextField(label: 'Description', maxLines: 4),
+                  children: [
+                    CustomTextField(label: 'Name', controller: nameController),
+                    CustomTextField(
+                      label: 'Category',
+                      controller: categoryController,
+                    ),
+                    CustomTextField(
+                      label: 'Price',
+                      isPrice: true,
+                      controller: priceController,
+                    ),
+                    CustomTextField(
+                      label: 'Description',
+                      maxLines: 4,
+                      controller: descriptionController,
+                    ),
                   ],
                 ),
               ),
 
               const SizedBox(height: 10),
 
-              // Buttons
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: onAddOrUpdate,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: MyColors.myBlue,
                         padding: const EdgeInsets.symmetric(vertical: 16),
@@ -97,27 +149,31 @@ class AddUpdatePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: const Text(
-                        "ADD",
-                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      child: Text(
+                        isUpdating ? "UPDATE" : "ADD",
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 12),
-                    OutlinedButton(
-                      onPressed: () {},
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.red,
-                        side: const BorderSide(color: Colors.red),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                    if (isUpdating)
+                      OutlinedButton(
+                        onPressed: onDelete,
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.red,
+                          side: const BorderSide(color: Colors.red),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: const Text(
+                          "DELETE",
+                          style: TextStyle(fontSize: 12),
                         ),
                       ),
-                      child: const Text(
-                        "DELETE",
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ),
                   ],
                 ),
               ),
