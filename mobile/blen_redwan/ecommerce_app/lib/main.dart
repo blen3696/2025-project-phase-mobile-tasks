@@ -1,4 +1,4 @@
-import 'models/product.dart';
+import 'domain/entities/product.dart';
 import 'package:flutter/material.dart';
 import 'screens/home_page.dart';
 import './screens/details_page.dart';
