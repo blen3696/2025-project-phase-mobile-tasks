@@ -1,9 +1,9 @@
 import '../entities/product.dart';
 
 abstract class ProductRepository {
-  List<Product> getAllProducts();
-  Product? getProductById(int id);
-  void addProduct(Product product);
-  void updateProduct(Product product);
-  void deleteProduct(int id);
+  Future<List<Product>> getAllProducts();
+  Future<Product?> getProductById(int id);
+  Future<void> addProduct(Product product);
+  Future<void> updateProduct(Product product);
+  Future<void> deleteProduct(int id);
 }

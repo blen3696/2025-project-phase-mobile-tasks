@@ -6,5 +6,5 @@ class ViewProductUsecase {
 
   ViewProductUsecase(this.repository);
 
-  Product? call(int id) => repository.getProductById(id);
+  Future<Product?> call(int id) => repository.getProductById(id);
 }
