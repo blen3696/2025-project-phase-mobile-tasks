@@ -6,5 +6,5 @@ class ViewAllProductsUsecase {
 
   ViewAllProductsUsecase(this.repository);
 
-  List<Product> call() => repository.getAllProducts();
+  Future<List<Product>> call() => repository.getAllProducts();
 }
