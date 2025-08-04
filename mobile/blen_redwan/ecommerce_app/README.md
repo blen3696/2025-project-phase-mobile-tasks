@@ -4,7 +4,6 @@
 This project is a modular Flutter ecommerce app built using Clean Architecture principles. It separates concerns into data, domain, and presentation layers, making the app easier to test, scale, and maintain.
 
 ## Project Structure
-```
 
 lib/
 ├── core/ Shared utilities and constants
@@ -24,6 +23,7 @@ test/
 └── data/
 └── models/
 └── product_model_test.dart
+```
 
 ```
 
