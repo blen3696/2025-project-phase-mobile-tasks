@@ -16,7 +16,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 6), () {
+    Timer(const Duration(seconds: 20), () {
       context.read<AuthBloc>().add(AppStarted());
     });
   }

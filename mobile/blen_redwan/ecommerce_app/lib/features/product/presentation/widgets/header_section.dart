@@ -23,14 +23,14 @@
 //             //   ),
 //             GestureDetector(
 //               onTap: () async {
-//                 // Navigator.pushNamed(
-//                 //   context,
-//                 //   '/chat',
-//                 //   arguments: {
-//                 //     '_id': 'dummyId',
-//                 //     'user2': {'name': 'Test User'},
-//                 //   },
-//                 // );
+// Navigator.pushNamed(
+//   context,
+//   '/chat',
+//   arguments: {
+//     '_id': 'dummyId',
+//     'user2': {'name': 'Test User'},
+//   },
+// );
 //                 // Navigator.pushNamed(context, '/chats');
 //                 final prefs = await SharedPreferences.getInstance();
 //                 final token = prefs.getString('user_token');
@@ -109,7 +109,7 @@ class HeaderSection extends StatefulWidget {
 }
 
 class _HeaderSectionState extends State<HeaderSection> {
-  String userName = 'User'; // Default placeholder
+  String userName = 'User';
 
   @override
   void initState() {

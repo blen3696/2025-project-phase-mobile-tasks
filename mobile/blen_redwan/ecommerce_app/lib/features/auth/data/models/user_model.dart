@@ -17,6 +17,7 @@ class UserModel extends User {
   }
 
   @override
+  // ignore: override_on_non_overriding_member
   Map<String, dynamic> toJson() {
     return {'name': name, 'email': email, 'token': token};
   }
