@@ -19,6 +19,6 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() async {
-    // You could also clear shared_preferences or tokens here
+    await remoteDataSource.logout();
   }
 }

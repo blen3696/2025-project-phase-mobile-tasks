@@ -36,6 +36,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('user_name', user.name);
         await prefs.setString('user_email', user.email);
+        await prefs.setString('user_token', user.token);
 
         emit(Authenticated(user));
       } catch (e) {

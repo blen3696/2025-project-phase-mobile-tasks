@@ -54,7 +54,7 @@ class _SplashPageState extends State<SplashPage> {
                     child: Image.asset(
                       'assets/images/logo.png',
                       height: 80,
-                      width: 50,
+                      width: 160,
                       fit: BoxFit.contain,
                     ),
                   ),

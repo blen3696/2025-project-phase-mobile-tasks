@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user_model.dart';
 
 abstract class AuthRemoteDataSource {
   Future<UserModel> login(String email, String password);
   Future<UserModel> signup(String name, String email, String password);
+
+  Future<void> logout() async {}
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -44,5 +47,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     } else {
       throw Exception('Failed to signup with status: ${response.statusCode}');
     }
+  }
+
+  @override
+  Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('user_token');
+    await prefs.remove('user_name');
+    await prefs.remove('user_email');
   }
 }
