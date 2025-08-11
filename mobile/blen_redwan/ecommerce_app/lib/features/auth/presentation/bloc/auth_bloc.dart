@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../chat/data/datasources/chat_socket_service.dart';
 import 'auth_state.dart';
 import 'auth_event.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -33,9 +34,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
       try {
         final user = await authRepository.login(event.email, event.password);
+
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('user_name', user.name);
         await prefs.setString('user_email', user.email);
+        await prefs.setString('user_token', user.token);
+
+        ChatSocketService().setToken(user.token);
 
         emit(Authenticated(user));
       } catch (e) {
