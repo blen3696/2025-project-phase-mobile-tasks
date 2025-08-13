@@ -1,53 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import '../../../auth/presentation/bloc/auth_bloc.dart';
-// import '../bloc/chat_bloc.dart';
-// import '../bloc/chat_event.dart';
-// import '../bloc/chat_state.dart';
-// import '../widgets/chat_item.dart';
-
-// class ChatListPage extends StatelessWidget {
-//   const ChatListPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final chatBloc = context.read<ChatBloc>();
-//     Future.microtask(() => chatBloc.add(LoadChatsRequested()));
-
-//     return Scaffold(
-//       appBar: AppBar(title: const Text('Chats')),
-//       body: BlocBuilder<ChatBloc, ChatState>(
-//         builder: (context, state) {
-//           if (state.loading) {
-//             return const Center(child: CircularProgressIndicator());
-//           }
-//           if (state.error != null) return Center(child: Text(state.error!));
-//           if (state.chats.isEmpty) return const Center(child: Text('No chats'));
-
-//           final chats = state.chats;
-//           final authUser = context.select((AuthBloc b) => b.state.user);
-//           final authId = authUser?.id;
-
-//           return ListView.builder(
-//             itemCount: chats.length,
-//             itemBuilder: (context, index) {
-//               final chat = chats[index];
-//               final user2 = chat['user2'] ?? chat['participant'];
-//               final isMe = user2 != null ? (user2['_id'] == authId) : false;
-
-//               return GestureDetector(
-//                 onTap: () =>
-//                     Navigator.pushNamed(context, '/chat', arguments: chat),
-//                 child: ChatItem(chat: chat, isMe: isMe),
-//               );
-//             },
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
@@ -59,12 +9,12 @@ class ChatListPage extends StatelessWidget {
   ChatListPage({super.key});
 
   final List<Color> pastelColors = [
-    const Color.fromARGB(255, 156, 219, 208), // pastel teal
-    const Color.fromARGB(255, 235, 169, 169), // pastel pink
-    const Color.fromARGB(255, 255, 235, 168), // pastel yellow
-    const Color.fromARGB(255, 209, 240, 159), // pastel green
-    const Color.fromARGB(255, 215, 227, 252), // pastel blue
-    const Color.fromARGB(255, 246, 214, 214), // pastel peach
+    const Color.fromARGB(255, 156, 219, 208),
+    const Color.fromARGB(255, 235, 169, 169),
+    const Color.fromARGB(255, 255, 235, 168),
+    const Color.fromARGB(255, 209, 240, 159),
+    const Color.fromARGB(255, 215, 227, 252),
+    const Color.fromARGB(255, 246, 214, 214),
   ];
 
   final List<String> avatarImages = [
@@ -85,7 +35,6 @@ class ChatListPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // Blue header with status circles
             Container(
               height: 110,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -116,7 +65,6 @@ class ChatListPage extends StatelessWidget {
               ),
             ),
 
-            // White chat list container
             Expanded(
               child: Container(
                 decoration: const BoxDecoration(
@@ -150,7 +98,6 @@ class ChatListPage extends StatelessWidget {
                             ? (user2['_id'] == authId)
                             : false;
 
-                        // Alternate avatar and bg color
                         final avatarImage =
                             avatarImages[index % avatarImages.length];
                         final bgColor =

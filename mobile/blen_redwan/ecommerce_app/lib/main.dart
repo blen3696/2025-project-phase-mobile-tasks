@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
-// Auth imports
 import 'features/auth/data/datasources/auth_remote_data_source.dart';
 import 'features/auth/data/repositories/auth_repository_impl.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
@@ -11,14 +10,12 @@ import 'features/auth/presentation/pages/login_page.dart';
 import 'features/auth/presentation/pages/signup_page.dart';
 import 'features/auth/presentation/pages/splash_page.dart';
 
-// Product imports
 import 'features/product/domain/entities/product.dart';
 import 'features/product/presentation/screens/home_page.dart';
 import 'features/product/presentation/screens/details_page.dart';
 import 'features/product/presentation/screens/add_update_page.dart';
 import 'features/product/presentation/screens/search_page.dart';
 
-// Chat imports
 import 'features/chat/data/datasources/chat_remote_data_source.dart';
 import 'features/chat/data/repositories/chat_repository_impl.dart';
 import 'features/chat/presentation/bloc/chat_bloc.dart';
@@ -30,11 +27,9 @@ import 'features/chat/data/datasources/chat_socket_service.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Auth setup
   final authRemoteDataSource = AuthRemoteDataSourceImpl(http.Client());
   final authRepository = AuthRepositoryImpl(authRemoteDataSource);
 
-  // Chat setup
   final chatSocketService = ChatSocketService();
   final chatRemoteDataSource = ChatRemoteDataSourceImpl(
     chatSocketService,
@@ -64,7 +59,6 @@ class MyApp extends StatelessWidget {
           current is Authenticated || current is Unauthenticated,
       listener: (context, state) {
         if (state is Authenticated) {
-          // Get token from user inside Authenticated state
           final token = state.user.token;
           chatSocketService.setToken(token);
           context.read<ChatBloc>().add(ChatConnectRequested());
