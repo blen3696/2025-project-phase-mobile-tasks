@@ -3,15 +3,18 @@ import '../../domain/entities/product.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
+  final VoidCallback? onTap;
 
-  const ProductCard({super.key, required this.product});
+  const ProductCard({super.key, required this.product, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, '/details', arguments: product);
-      },
+      onTap:
+          onTap ??
+          () {
+            Navigator.pushNamed(context, '/details', arguments: product);
+          },
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
@@ -34,7 +37,6 @@ class ProductCard extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(12),
               child: Column(
@@ -74,7 +76,6 @@ class ProductCard extends StatelessWidget {
                           color: Colors.grey,
                         ),
                       ),
-
                       Row(
                         children: [
                           const Icon(Icons.star, color: Colors.amber, size: 16),

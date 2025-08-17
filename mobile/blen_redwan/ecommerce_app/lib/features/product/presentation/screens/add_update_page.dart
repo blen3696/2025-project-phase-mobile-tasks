@@ -1,11 +1,13 @@
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../../colors.dart';
 import '../../domain/entities/product.dart';
+import '../../app/products_service.dart';
 import '../widgets/custom_text_field.dart';
-import 'package:flutter/material.dart';
 
 class AddUpdatePage extends StatefulWidget {
   final Product? product;
-
   const AddUpdatePage({super.key, this.product});
 
   @override
@@ -18,41 +20,65 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
   final priceController = TextEditingController();
   final descriptionController = TextEditingController();
 
+  File? selectedImage;
+
+  bool get isUpdating => widget.product != null;
+
   @override
   void initState() {
     super.initState();
-    if (widget.product != null) {
-      nameController.text = widget.product!.name;
-      categoryController.text = widget.product!.category;
-      priceController.text = widget.product!.price.toString();
-      descriptionController.text = widget.product!.description;
+    if (isUpdating) {
+      final p = widget.product!;
+      nameController.text = p.name;
+      categoryController.text = p.category;
+      priceController.text = p.price.toString();
+      descriptionController.text = p.description;
     }
   }
 
-  void onAddOrUpdate() {
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(source: ImageSource.gallery);
+    if (picked != null) {
+      setState(() {
+        selectedImage = File(picked.path);
+      });
+    }
+  }
+
+  Future<void> onAddOrUpdate() async {
+    final svc = ProductsService()..init();
     final product = Product(
       id: widget.product?.id ?? DateTime.now().millisecondsSinceEpoch,
       name: nameController.text.trim(),
       category: categoryController.text.trim(),
       price: double.tryParse(priceController.text.trim()) ?? 0,
-      image: widget.product?.image ?? 'assets/images/default.png',
+      image:
+          selectedImage?.path ??
+          widget.product?.image ??
+          'assets/images/product1.jpg',
       rating: widget.product?.rating ?? 4.0,
       description: descriptionController.text.trim(),
     );
 
-    Navigator.pop(context, product);
+    if (isUpdating) {
+      await svc.update(product);
+    } else {
+      await svc.create(product);
+    }
+
+    if (mounted) Navigator.pop(context, true);
   }
 
-  void onDelete() {
-    if (widget.product != null) {
-      Navigator.pop(context, {'delete': widget.product!.id});
-    }
+  Future<void> onDelete() async {
+    if (!isUpdating) return;
+    final svc = ProductsService();
+    await svc.delete(widget.product!.id as String);
+    if (mounted) Navigator.pop(context, true);
   }
 
   @override
   Widget build(BuildContext context) {
-    final isUpdating = widget.product != null;
-
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
@@ -84,35 +110,36 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 10),
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: pickImage,
                   child: Container(
                     height: 120,
                     decoration: BoxDecoration(
                       color: MyColors.myLightGrey,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.image_outlined, size: 36),
-                          SizedBox(height: 16),
-                          Text('Upload Image', style: TextStyle(fontSize: 12)),
-                        ],
-                      ),
-                    ),
+                    child: selectedImage != null
+                        ? Image.file(selectedImage!, fit: BoxFit.cover)
+                        : const Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.image_outlined, size: 36),
+                                SizedBox(height: 16),
+                                Text(
+                                  'Upload Image',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ),
                   ),
                 ),
               ),
-
               const SizedBox(height: 10),
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
@@ -135,9 +162,7 @@ class _AddUpdatePageState extends State<AddUpdatePage> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 10),
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(

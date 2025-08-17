@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../domain/entities/product.dart';
+import '../models/product_model.dart';
 import 'product_local_data_source.dart';
+import '../../domain/entities/product.dart';
 
 class ProductLocalDataSourceImpl implements ProductLocalDataSource {
   static const String _cachedKey = 'CACHED_PRODUCTS';
@@ -15,14 +15,26 @@ class ProductLocalDataSourceImpl implements ProductLocalDataSource {
     final jsonString = sharedPreferences.getString(_cachedKey);
     if (jsonString != null) {
       final List<dynamic> decoded = json.decode(jsonString);
-      return decoded.map((item) => Product.fromJson(item)).toList();
+      return decoded.map((item) => ProductModel.fromJson(item)).toList();
     }
     return [];
   }
 
   @override
   void cacheProducts(List<Product> products) {
-    final jsonList = products.map((p) => p.toJson()).toList();
+    final jsonList = products
+        .map(
+          (p) => ProductModel(
+            id: p.id,
+            name: p.name,
+            description: p.description,
+            price: p.price,
+            image: p.image,
+            rating: p.rating,
+            category: p.category,
+          ).toJson(),
+        )
+        .toList();
     sharedPreferences.setString(_cachedKey, json.encode(jsonList));
   }
 

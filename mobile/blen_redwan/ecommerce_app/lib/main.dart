@@ -1,3 +1,4 @@
+import 'features/product/app/products_service.dart';
 import 'features/product/domain/entities/product.dart';
 import 'package:flutter/material.dart';
 import 'features/product/presentation/screens/home_page.dart';
@@ -5,7 +6,8 @@ import 'features/product/presentation/screens/details_page.dart';
 import 'features/product/presentation/screens/add_update_page.dart';
 import 'features/product/presentation/screens/search_page.dart';
 
-void main() {
+Future<void> main() async {
+  ProductsService().init();
   runApp(const MyApp());
 }
 

@@ -1,11 +1,29 @@
-import '../../../../colors.dart';
 import 'package:flutter/material.dart';
+import '../../../../colors.dart';
 import '../../domain/entities/product.dart';
+import '../../app/products_service.dart';
 import '../widgets/size_selector.dart';
 
 class DetailsPage extends StatelessWidget {
   final Product product;
   const DetailsPage({super.key, required this.product});
+
+  Future<void> _delete(BuildContext context) async {
+    final service = ProductsService();
+    await service.delete(product.id as String);
+    if (context.mounted) Navigator.pop(context, true);
+  }
+
+  Future<void> _openUpdate(BuildContext context) async {
+    final changed = await Navigator.pushNamed(
+      context,
+      '/add-update',
+      arguments: product,
+    );
+    if (changed == true && context.mounted) {
+      Navigator.pop(context, true); 
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,31 +36,30 @@ class DetailsPage extends StatelessWidget {
               Stack(
                 children: [
                   ClipRRect(
-                    child: Image.asset(
-                      product.image,
-                      width: double.infinity,
-                      height: 300,
-                      fit: BoxFit.cover,
-                    ),
+                    child: product.image.startsWith('http')
+                        ? Image.network(
+                            product.image,
+                            width: double.infinity,
+                            height: 300,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            product.image,
+                            width: double.infinity,
+                            height: 300,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                   Positioned(
                     top: 16,
                     left: 16,
                     child: CircleAvatar(
                       backgroundColor: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsetsGeometry.symmetric(
-                          horizontal: 4,
-                          vertical: 0,
-                        ),
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: const Icon(
-                            Icons.arrow_back_ios,
-                            color: MyColors.myBlue,
-                          ),
+                      child: IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          color: MyColors.myBlue,
                         ),
                       ),
                     ),
@@ -50,7 +67,6 @@ class DetailsPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
@@ -78,12 +94,9 @@ class DetailsPage extends StatelessWidget {
                         ),
                       ],
                     ),
-
                     const SizedBox(height: 18),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                       children: [
                         Text(
                           product.name,
@@ -101,9 +114,7 @@ class DetailsPage extends StatelessWidget {
                         ),
                       ],
                     ),
-
                     const SizedBox(height: 10),
-
                     const SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
@@ -121,23 +132,17 @@ class DetailsPage extends StatelessWidget {
                         ],
                       ),
                     ),
-
                     const SizedBox(height: 16),
-
-                    const Text(
-                      'A derby leather shoe is a classic and versatile footwear option characterized by its open lacing system, where the shoelace eyelets are sewn on top of the vamp (the upper part of the shoe). This design feature provides a more relaxed and casual look compared to the closed lacing system of oxford shoes. Derby shoes are typically made of high-quality leather, known for its durability and elegance, making them suitable for both formal and casual occasions. With their timeless style and comfortable fit, derby leather shoes are a staple in any well-rounded wardrobe.',
-                      style: TextStyle(fontSize: 13, height: 1.6),
+                    Text(
+                      product.description,
+                      style: const TextStyle(fontSize: 13, height: 1.6),
                     ),
-
                     const SizedBox(height: 24),
-
                     Row(
                       children: [
                         Expanded(
                           child: OutlinedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
+                            onPressed: () => _delete(context),
                             style: OutlinedButton.styleFrom(
                               foregroundColor: Colors.red,
                               side: const BorderSide(color: Colors.red),
@@ -146,25 +151,16 @@ class DetailsPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-
                             child: const Text(
                               'DELETE',
                               style: TextStyle(fontSize: 14, color: Colors.red),
                             ),
                           ),
                         ),
-
                         const SizedBox(width: 80),
-
                         Expanded(
                           child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                '/add-update',
-                                arguments: product,
-                              );
-                            },
+                            onPressed: () => _openUpdate(context),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: MyColors.myBlue,
                               padding: const EdgeInsets.symmetric(vertical: 18),

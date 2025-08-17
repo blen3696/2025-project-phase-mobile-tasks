@@ -1,80 +1,69 @@
+// lib/features/products/data/repositories/product_repository_impl.dart
 import '../../domain/entities/product.dart';
 import '../../domain/repositories/product_repository.dart';
 import '../datasources/product_local_data_source.dart';
-import '../datasources/product_remote_data_source.dart';
-import '../../../../core/network/network_info.dart';
+import '../dummy_products.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
-  final ProductLocalDataSource localDataSource;
-  final ProductRemoteDataSource remoteDataSource;
-  final NetworkInfo networkInfo;
+  final ProductLocalDataSource local;
+  List<Product>? _memory;
 
-  ProductRepositoryImpl({
-    required this.localDataSource,
-    required this.remoteDataSource,
-    required this.networkInfo,
-  });
+  ProductRepositoryImpl({required this.local});
 
-  @override
-  Future<List<Product>> getAllProducts() async {
-    final connected = await networkInfo.isConnected;
-
-    if (connected) {
-      try {
-        final remoteProducts = await remoteDataSource.fetchAllProducts();
-        localDataSource.cacheProducts(remoteProducts);
-        return remoteProducts;
-      } catch (e) {
-        throw Exception('Failed to fetch products from remote: $e');
-      }
+  Future<void> _ensureInitialized() async {
+    if (_memory != null) return;
+    final cached = local.getCachedProducts();
+    if (cached.isEmpty) {
+      local.cacheProducts(dummyProducts);
+      _memory = List<Product>.from(dummyProducts);
     } else {
-      final cached = localDataSource.getCachedProducts();
-      if (cached.isNotEmpty) {
-        return cached;
-      } else {
-        throw Exception('No internet connection and no cached data available.');
-      }
+      _memory = List<Product>.from(cached);
+    }
+  }
+
+  Future<void> _persist() async {
+    if (_memory != null) {
+      local.cacheProducts(_memory!);
     }
   }
 
   @override
+  Future<List<Product>> getAllProducts() async {
+    await _ensureInitialized();
+    return List<Product>.unmodifiable(_memory!);
+  }
+
+  @override
   Future<Product?> getProductById(int id) async {
-    final connected = await networkInfo.isConnected;
-
-    if (connected) {
-      try {
-        final product = await remoteDataSource.fetchProductById(id);
-        return product;
-      } catch (e) {
-        throw Exception('Failed to fetch product from remote: $e');
-      }
-    } else {
-      final cachedProducts = localDataSource.getCachedProducts();
-      final localProduct = cachedProducts.firstWhere(
-        (p) => p.id == id,
-        orElse: () => Product.empty(),
-      );
-
-      if (localProduct == Product.empty()) {
-        throw Exception('No internet and product not found in cache.');
-      }
-
-      return localProduct;
+    await _ensureInitialized();
+    try {
+      return _memory!.firstWhere((p) => p.id == id);
+    } catch (_) {
+      return null;
     }
   }
 
   @override
   Future<void> addProduct(Product product) async {
-    localDataSource.addProduct(product);
+    await _ensureInitialized();
+    _memory!.add(product);
+    await _persist();
   }
 
   @override
   Future<void> updateProduct(Product product) async {
-    localDataSource.updateProduct(product);
+    await _ensureInitialized();
+    final idx = _memory!.indexWhere((p) => p.id == product.id);
+    if (idx != -1) {
+      _memory![idx] = product;
+      await _persist();
+    }
   }
 
   @override
   Future<void> deleteProduct(int id) async {
-    localDataSource.deleteProduct(id);
+    await _ensureInitialized();
+    _memory!.removeWhere((p) => p.id == id);
+    await _persist();
   }
 }

@@ -1,11 +1,54 @@
 import 'package:flutter/material.dart';
-import '../../data/dummy_products.dart';
-import '../widgets/product_card.dart';
-import '../widgets/header_section.dart';
 import '../../../../colors.dart';
+import '../../domain/entities/product.dart';
+import '../../app/products_service.dart';
+import '../widgets/header_section.dart';
+import '../widgets/product_card.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<Product> _products = [];
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final svc = ProductsService();
+    final items = await svc.getAll();
+    setState(() {
+      _products = items;
+      _loading = false;
+    });
+  }
+
+  Future<void> _openAdd() async {
+    final changed = await Navigator.pushNamed(context, '/add-update');
+    if (changed == true) await _load();
+  }
+
+  Future<void> _openDetails(Product p) async {
+    final changed = await Navigator.pushNamed(
+      context,
+      '/details',
+      arguments: p,
+    );
+    if (changed == true) await _load();
+  }
+
+  Future<void> _openSearch() async {
+    final changed = await Navigator.pushNamed(context, '/search');
+    if (changed == true) await _load();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +61,7 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const HeaderSection(),
-              const SizedBox(height: 22.0),
+              const SizedBox(height: 22),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -27,9 +70,7 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/search');
-                    },
+                    onTap: _openSearch,
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
@@ -41,13 +82,21 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
-              // SearchBar(),
-              const SizedBox(height: 16.0),
-              const Expanded(
-                child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: ProductList(),
-                ),
+              const SizedBox(height: 16),
+              Expanded(
+                child: _loading
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView.builder(
+                        padding: const EdgeInsets.all(16),
+                        itemCount: _products.length,
+                        itemBuilder: (context, index) {
+                          final product = _products[index];
+                          return ProductCard(
+                            product: product,
+                            onTap: () => _openDetails(product),
+                          );
+                        },
+                      ),
               ),
             ],
           ),
@@ -55,26 +104,10 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: MyColors.myBlue,
-        onPressed: () {
-          Navigator.pushNamed(context, '/add-update');
-        },
+        onPressed: _openAdd,
         shape: const CircleBorder(),
         child: const Icon(Icons.add, color: Colors.white, size: 32),
       ),
-    );
-  }
-}
-
-class ProductList extends StatelessWidget {
-  const ProductList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: dummyProducts.length,
-      itemBuilder: (context, index) {
-        return ProductCard(product: dummyProducts[index]);
-      },
     );
   }
 }
